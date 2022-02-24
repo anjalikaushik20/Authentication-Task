@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './auth/login.dart';
+import './auth/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,13 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
               style: raisedButtonStyle,
-              onPressed: () { },
+              onPressed: () {Login();},
               child: const Text('Login!'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               style: raisedButtonStyle,
-              onPressed: () { },
+              onPressed: () {Register();},
               child: const Text('Sign up!'),
             ),
           ],
