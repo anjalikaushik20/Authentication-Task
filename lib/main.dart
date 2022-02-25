@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Authentication',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
+        fontFamily: 'NotoSans',
       ),
       home: const MyHomePage(title: 'Authentication'),
     );
@@ -33,9 +34,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-    onPrimary: Colors.black87,
-    primary: Colors.grey[300],
-    minimumSize: const Size(200, 50),
+    onPrimary: Colors.white,
+    primary: Colors.blueGrey,
+    fixedSize: const Size(200, 100),
+    textStyle: const TextStyle(fontFamily: 'NotoSans', fontSize: 18,),
     padding: const EdgeInsets.symmetric(horizontal: 16),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(2)),
@@ -54,14 +56,38 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
               style: raisedButtonStyle,
-              onPressed: () {Login();},
-              child: const Text('Login!'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Login()),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Icon(Icons.login_outlined),
+                  SizedBox(width: 12),
+                  Text('Login!', textAlign: TextAlign.center),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               style: raisedButtonStyle,
-              onPressed: () {Register();},
-              child: const Text('Sign up!'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Register()),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Icon(Icons.app_registration_outlined),
+                  SizedBox(width: 12),
+                  Text('Sign up!', textAlign: TextAlign.center),
+                ],
+              ),
             ),
           ],
         ),
