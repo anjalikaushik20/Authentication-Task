@@ -1,15 +1,15 @@
-import 'package:authentication/auth/login/email.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:authentication/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
 
-class EmailReg extends StatefulWidget {
-  const EmailReg({ Key? key }) : super(key: key);
+class EmailLog extends StatefulWidget {
+  const EmailLog({ Key? key }) : super(key: key);
 
   @override
-  _EmailRegState createState() => _EmailRegState();
+  _EmailLogState createState() => _EmailLogState();
 }
 
-class _EmailRegState extends State<EmailReg> {
+class _EmailLogState extends State<EmailLog> {
 
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
@@ -23,13 +23,13 @@ class _EmailRegState extends State<EmailReg> {
   );
 
   final _formKey = GlobalKey<FormState>();
-  String mail = "", pass = "", name = "";
+  String mail = "", pass = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign up', textAlign: TextAlign.center),
+        title: const Text('Login', textAlign: TextAlign.center),
       ),
       body: Center(
         child: Column(
@@ -39,7 +39,7 @@ class _EmailRegState extends State<EmailReg> {
             const SizedBox(height: 12),
             RichText(
               text: const TextSpan(
-                text: 'Register using Email ID',
+                text: 'Login with Email ID',
                 style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: Colors.black),
               ),
             ),
@@ -51,22 +51,6 @@ class _EmailRegState extends State<EmailReg> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter Fullname',
-                      ),
-                      validator: (value){
-                        if(value == null || value.isEmpty){
-                          return 'Please enter name';
-                        }
-                        return null;
-                      },
-                      onChanged: (value){
-                        setState(() => name = value);
-                      },
-                    ),
-                    const SizedBox(height: 10),
                     TextFormField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -109,10 +93,10 @@ class _EmailRegState extends State<EmailReg> {
                         }
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const EmailLog()),
+                          MaterialPageRoute(builder: (context) => const Dashboard()),
                         );
                       },
-                      child: const Text('Register', textAlign: TextAlign.center),
+                      child: const Text('Login', textAlign: TextAlign.center),
                     ),
                   ],
                 ),

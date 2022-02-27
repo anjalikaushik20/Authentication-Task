@@ -1,3 +1,4 @@
+import 'package:authentication/auth/login/email.dart';
 import 'package:flutter/material.dart';
 
 
@@ -36,7 +37,12 @@ class _LoginState extends State<Login> {
               children: <Widget>[
                 ElevatedButton(
                   style: raisedButtonStyle,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const EmailLog()),
+                    );
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const <Widget>[

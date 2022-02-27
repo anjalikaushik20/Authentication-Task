@@ -48,9 +48,9 @@ class _RegisterState extends State<Register> {
                   style: raisedButtonStyle,
                   onPressed: () {
                     Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Email()),
-                );
+                      context,
+                      MaterialPageRoute(builder: (context) => const EmailReg()),
+                    );
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
