@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './reg/email.dart';
 
 class Register extends StatefulWidget {
   const Register({ Key? key }) : super(key: key);
@@ -45,7 +46,12 @@ class _RegisterState extends State<Register> {
               children: <Widget>[
                 ElevatedButton(
                   style: raisedButtonStyle,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Email()),
+                );
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const <Widget>[
