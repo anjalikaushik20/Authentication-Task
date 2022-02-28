@@ -1,4 +1,6 @@
+import 'package:authentication/auth/services.dart';
 import 'package:authentication/dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -23,7 +25,7 @@ class _EmailLogState extends State<EmailLog> {
   );
 
   final _formKey = GlobalKey<FormState>();
-  String mail = "", pass = "";
+  String _mail = "", _pass = "";
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class _EmailLogState extends State<EmailLog> {
                         return null;
                       },
                       onChanged: (value){
-                        setState(() => mail = value);
+                        setState(() => _mail = value);
                       },
                     ),
                     const SizedBox(height: 10),
@@ -79,22 +81,28 @@ class _EmailLogState extends State<EmailLog> {
                         return null;
                       },
                       onChanged: (value){
-                        setState(() => pass = value);
+                        setState(() => _pass = value);
                       },
                       obscureText: true,
                     ),
                     const SizedBox(height: 12),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data...')),
-                          );
+
+                          FireServices().signIn(email: _mail, password: _pass).then((value) 
+                          {
+                            if(value == null){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const Dashboard()),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Logging in...')),
+                              );
+                            }
+                          });
                         }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Dashboard()),
-                        );
                       },
                       child: const Text('Login', textAlign: TextAlign.center),
                     ),

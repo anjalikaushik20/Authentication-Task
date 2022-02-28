@@ -1,5 +1,7 @@
 import 'package:authentication/auth/login/email.dart';
+import 'package:authentication/auth/services.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EmailReg extends StatefulWidget {
@@ -23,7 +25,7 @@ class _EmailRegState extends State<EmailReg> {
   );
 
   final _formKey = GlobalKey<FormState>();
-  String mail = "", pass = "", name = "";
+  String _mail = "", _pass = "", _name = "";
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class _EmailRegState extends State<EmailReg> {
                         return null;
                       },
                       onChanged: (value){
-                        setState(() => name = value);
+                        setState(() => _name = value);
                       },
                     ),
                     const SizedBox(height: 10),
@@ -79,7 +81,7 @@ class _EmailRegState extends State<EmailReg> {
                         return null;
                       },
                       onChanged: (value){
-                        setState(() => mail = value);
+                        setState(() => _mail = value);
                       },
                     ),
                     const SizedBox(height: 10),
@@ -95,22 +97,28 @@ class _EmailRegState extends State<EmailReg> {
                         return null;
                       },
                       onChanged: (value){
-                        setState(() => pass = value);
+                        setState(() => _pass = value);
                       },
                       obscureText: true,
                     ),
                     const SizedBox(height: 12),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data...')),
-                          );
+
+                          FireServices().signUp(email: _mail, password: _pass).then((value)
+                          {
+                            if(value == null){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const EmailLog()),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Processing Data...')),
+                              );
+                            }
+                          });
                         }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const EmailLog()),
-                        );
                       },
                       child: const Text('Register', textAlign: TextAlign.center),
                     ),
