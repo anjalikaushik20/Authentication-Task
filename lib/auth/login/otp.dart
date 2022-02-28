@@ -1,16 +1,14 @@
-import 'package:authentication/auth/services.dart';
 import 'package:authentication/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 
-class EmailLog extends StatefulWidget {
-  const EmailLog({ Key? key }) : super(key: key);
+class OTPLog extends StatefulWidget {
+  const OTPLog({ Key? key }) : super(key: key);
 
   @override
-  _EmailLogState createState() => _EmailLogState();
+  _OTPLogState createState() => _OTPLogState();
 }
 
-class _EmailLogState extends State<EmailLog> {
+class _OTPLogState extends State<OTPLog> {
 
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     onPrimary: Colors.white,
@@ -24,7 +22,7 @@ class _EmailLogState extends State<EmailLog> {
   );
 
   final _formKey = GlobalKey<FormState>();
-  String _mail = "", _pass = "";
+  String _otp = '';
 
   @override
   Widget build(BuildContext context) {
@@ -36,18 +34,18 @@ class _EmailLogState extends State<EmailLog> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Icon(Icons.mail_rounded),
+            const Icon(Icons.message_rounded),
             const SizedBox(height: 12),
             RichText(
               text: const TextSpan(
-                text: 'Login with Email ID',
+                text: 'Login with OTP',
                 style: TextStyle(fontFamily: 'NotoSans', fontSize: 18, color: Colors.black),
               ),
             ),
             const SizedBox(height: 12),
             SizedBox(
+              height: 350,
               width: 250,
-              height: 300,
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -55,59 +53,37 @@ class _EmailLogState extends State<EmailLog> {
                     TextFormField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Enter email',
+                        hintText: 'Enter OTP',
                       ),
+                      keyboardType: TextInputType.number,
                       validator: (value) {
-                        if(!EmailValidator.validate(value!)) {
-                          return 'Enter a valid email';
+                        if(value!.isEmpty) {
+                          return 'Please enter OTP';
                         }
                         return null;
                       },
                       onChanged: (value){
-                        setState(() => _mail = value);
+                        setState(() => _otp = value);
                       },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Enter password'
-                      ),
-                      validator: (value){
-                        if(value == null || value.isEmpty){
-                          return 'Please enter password';
-                        }
-                        return null;
-                      },
-                      onChanged: (value){
-                        setState(() => _pass = value);
-                      },
-                      obscureText: true,
                     ),
                     const SizedBox(height: 12),
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-
-                          FireServices().signIn(email: _mail, password: _pass).then((value) 
-                          {
-                            if(value == null){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const Dashboard()),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Logging in...')),
-                              );
-                            }
-                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Dashboard()),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Logging in...')),
+                          );
                         }
-                      },
+                      }, 
                       child: const Text('Login', textAlign: TextAlign.center),
                     ),
                   ],
                 ),
-              ), 
+              ),
             ),
           ],
         ),
